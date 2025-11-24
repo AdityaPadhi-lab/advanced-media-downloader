@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: media
+      POSTGRES_USER: media
+      POSTGRES_PASSWORD: media
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  server:
+    build: "C:/Users/asus/Downloads/advanced-media-downloader/advanced-media-downloader/fastapi-backend"
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  worker:
+    build: "C:/Users/asus/Downloads/advanced-media-downloader/advanced-media-downloader/download-engine"
+    env_file:
+      - ./.env
+    depends_on:
+      - server
+      - redis
+
+  bot:
+    build: "C:/Users/asus/Downloads/advanced-media-downloader/advanced-media-downloader/telegram-bot"
+    env_file:
+      - ./.env
+    depends_on:
+      - server
+      - redis
+
+  dashboard:
+    build: "C:/Users/asus/Downloads/advanced-media-downloader/advanced-media-downloader/react-dashboard"
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./.env
+
+volumes:
+  redisdata:
+  pgdata:
