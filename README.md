@@ -1,41 +1,84 @@
 # 🎥 Advanced Media Downloader
 
-A powerful Python-based media downloader that supports video/audio downloading, organized workflows, and modular components for easy maintenance and extension.
+A powerful Python-based media downloader built to download videos and audio from multiple platforms with clean workflow, modular architecture, and batch processing support.
+
+---
+
+## 🚀 Features
+
+- Download **video/audio** from multiple platforms  
+- **Batch downloading** using text files  
+- Choose **output format** (mp4, mp3, wav, etc.)  
+- Custom **output directory**  
+- **Naming templates** for organized files  
+- Error-handled and stable pipeline  
+- Modular code for easy maintenance and future upgrades  
 
 ---
 
 ## 🧠 Project Workflow (How the System Works)
 
-Below is the complete workflow of the project so others can clearly understand your structure and logic.
+Below is the complete workflow to help others understand the system clearly.
 
-### 1️⃣ **Input Handling**
-- User provides:
-  - A **single URL**, or
-  - A **batch file** (`urls.txt`) containing multiple URLs.
-- CLI arguments are parsed using `argparse`.
+### 1️⃣ Input Handling
+- Accepts:
+  - A **single URL**
+  - A **batch file** (`urls.txt`)
+- Arguments parsed via `argparse`.
 
-### 2️⃣ **Validation Layer**
-- Each input URL is validated.
+### 2️⃣ URL Validation
 - Checks for:
   - Empty URLs  
-  - Invalid formatting  
+  - Invalid links  
   - Unsupported platforms  
-- Logs any invalid URL and continues with batch execution without crashing.
+- Invalid links are skipped but logged.
 
-### 3️⃣ **Downloader Engine**
-- Uses `yt-dlp` (or custom downloader function based on your code).
-- Key features:
-  - Select audio/video formats
-  - Set quality (best / worst / specific resolution)
-  - Custom naming template
-  - Output directory support
+### 3️⃣ Downloader Engine
+- Uses `yt-dlp` or custom logic.
+- Supports:
+  - Video quality selection  
+  - Audio-only extraction  
+  - Format selection  
+  - Metadata extraction  
 
-### 4️⃣ **Processing Pipeline**
-After download request:
-- Metadata extraction  
-- File naming  
-- Conversion (if selected: MP4 → MP3, WAV, etc.)  
-- Download progress tracking  
+### 4️⃣ Processing Pipeline
+After the download starts:
+- Metadata fetched  
+- Name formatted  
+- File saved  
+- Conversion (if selected)  
+- Progress displayed  
 
-### 5️⃣ **Output Handling**
-Downloaded files are stored in:
+### 5️⃣ Output Handling
+
+Downloads stored in:
+
+
+File name format:
+
+
+### 6️⃣ Logging & Error Management
+- Logs each download with:
+  - URL
+  - Timestamp
+  - Output file path
+  - Failure messages (if any)
+- Batch mode continues even when a link fails.
+
+### 7️⃣ Directory Structure
+
+
+---
+
+## 🖥️ Usage
+
+### ▶️ Download a Single URL
+```bash
+python cli.py --url "https://youtube.com/..."
+python cli.py --batch urls.txt
+python cli.py --url <URL> --output-dir ./downloads
+python cli.py --help
+git clone https://github.com/AdityaPadhi-lab/advanced-media-downloader.git
+cd advanced-media-downloader
+pip install -r requirements.txt
+pytest
